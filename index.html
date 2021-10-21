@@ -19,9 +19,9 @@
                         <ul class="navbar-nav">
                         </ul>
                     </div>
-                    <form class="form-wrapper">
-                        <input type="text" id="search" placeholder="Search something..." v-model="searchText">
-                        <input type="submit" value="go" id="submit" @click.prevent="searchFor()">
+                    <form action="#" class="search-form" @submit.prevent="filter">
+                        <searchform v-model="searchText" id="search-template"></searchform>
+                        <button class="btn-search" type="submit">Go</button>
                     </form>
                 </div>
             </nav>
@@ -40,15 +40,10 @@
                 </div>
 
             </div>
-            <div class="basket" v-if="basketSee == true">
-                <p>Корзина</p>
-                <div class="basket-item" v-for="product of basket" :key="product.id_product">
-                    <div class="desc">
-                        <h3> {{ product.product_name }} </h3>
-                        <p> {{ product.price }} </p>
-                    </div>
-                </div>
-            </div>
+            <cart
+                    :basket-see="basketSee"
+                    :basket="basket"
+            ></cart>
         </main>
 
     </div>
@@ -56,5 +51,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script src="script.js"></script>
+<script src="search_comp.js"></script>
+<script src="cart_comp.js"></script>
 </body>
 </html>

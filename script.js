@@ -22,16 +22,9 @@ let app = new Vue({
             console.log(product.id_product);
         },
 
-        searchFor() {
-            let text = this.searchText.toLowerCase().trim();
-
-            if (text === '') {
-                this.filteredProducts = this.products;
-            } else {
-                this.filteredProducts = this.products.filter((el) => {
-                    return el.product_name.toLowerCase().includes(text);
-                });
-            }
+        filter(){
+            let regexp = new RegExp(this.searchText, 'i');
+            this.filteredProducts = this.products.filter(el => regexp.test(el.product_name));
         },
 
         basketRend(){
