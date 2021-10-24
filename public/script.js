@@ -1,9 +1,9 @@
-const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+const API = 'http://127.0.0.1:3000';
 
 let app = new Vue({
     el: '#app',
     data: {
-        catalogUrl: '/catalogData.json',
+        catalogUrl: '/catalog',
         products: [],
         basket: [],
         searchText: '',
@@ -18,16 +18,28 @@ let app = new Vue({
                     console.log(error)
                 })
         },
+
         addProduct(product) {
-            console.log(product.id_product);
+            fetch(API + "/addToCart", {
+                method: "POST",
+                headers: {'Content-Type': "application/JSON"},
+                body: JSON.stringify({
+                    id_product: product.id_product,
+                    product_name: product.product_name,
+                    price: product.price
+                })
+            })
         },
 
-        filter(){
+
+
+
+        filter() {
             let regexp = new RegExp(this.searchText, 'i');
             this.filteredProducts = this.products.filter(el => regexp.test(el.product_name));
         },
 
-        basketRend(){
+        basketRend() {
             this.basketSee = (this.basketSee == true) ? false : true;
 
         }
@@ -42,9 +54,9 @@ let app = new Vue({
             });
         this.filteredProducts = this.products;
 
-        this.getJson(`${API + '/getBasket.json'}`)
+        this.getJson(`${API + '/getBasket'}`)
             .then(data => {
-                this.basket = data.contents
+                this.basket = data
 
             });
     }
